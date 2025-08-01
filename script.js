@@ -22,8 +22,11 @@ document.addEventListener('DOMContentLoaded', function() {
 // 初始化图表
 function initializeCharts() {
     try {
+        console.log('开始初始化图表...');
+        
         // 趋势图表
         const trendCtx = document.getElementById('trendChart');
+        console.log('趋势图表元素:', trendCtx);
         if (trendCtx) {
             trendChart = new Chart(trendCtx, {
                 type: 'line',
@@ -121,9 +124,9 @@ function initializeCharts() {
                             }
                         },
                         y: {
-                            beginAtZero: false,
+                            beginAtZero: true,
                             min: 0,
-                            max: Math.max(...influenzaData.positiveRates, ...influenzaData.visitRates) + 3,
+                            max: 20,
                             grid: {
                                 color: 'rgba(0, 0, 0, 0.05)',
                                 drawBorder: false
@@ -158,10 +161,14 @@ function initializeCharts() {
                     }
                 }
             });
+            console.log('趋势图表创建成功');
+        } else {
+            console.error('未找到趋势图表canvas元素');
         }
 
         // 病毒型别分布图
         const virusCtx = document.getElementById('virusChart');
+        console.log('病毒图表元素:', virusCtx);
         if (virusCtx) {
             virusChart = new Chart(virusCtx, {
                 type: 'doughnut',
@@ -213,10 +220,14 @@ function initializeCharts() {
                     cutout: '60%'
                 }
             });
+            console.log('病毒型别分布图创建成功');
+        } else {
+            console.error('未找到病毒图表canvas元素');
         }
 
         // 地区分布图
         const regionCtx = document.getElementById('regionChart');
+        console.log('地区图表元素:', regionCtx);
         if (regionCtx) {
             const regions = ['北京', '上海', '广东', '浙江', '江苏', '山东', '四川', '河南', '湖北', '湖南'];
             const regionData = [18.5, 16.2, 14.8, 13.9, 15.1, 12.3, 11.7, 13.2, 14.5, 12.8];
@@ -291,9 +302,9 @@ function initializeCharts() {
                             }
                         },
                         y: {
-                            beginAtZero: false,
-                            min: Math.min(...regionData) - 2,
-                            max: Math.max(...regionData) + 2,
+                            beginAtZero: true,
+                            min: 0,
+                            max: 25,
                             grid: {
                                 color: 'rgba(0, 0, 0, 0.05)',
                                 drawBorder: false
@@ -307,7 +318,7 @@ function initializeCharts() {
                                     size: 12
                                 },
                                 color: '#666',
-                                stepSize: 1
+                                stepSize: 2
                             },
                             title: {
                                 display: true,
@@ -324,11 +335,15 @@ function initializeCharts() {
                     }
                 }
             });
+            console.log('地区分布图创建成功');
+        } else {
+            console.error('未找到地区图表canvas元素');
         }
         
-        console.log('图表初始化完成');
+        console.log('所有图表初始化完成');
     } catch (error) {
         console.error('图表初始化失败:', error);
+        console.error('错误详情:', error.stack);
     }
 }
 
@@ -743,22 +758,151 @@ function printTable() {
 
 // 显示周报详情
 function showWeekDetail(week) {
-    alert('查看' + week + '详细数据\n\n' +
-          '这里将显示该周的详细流感监测数据，\n' +
-          '包括各省份分布、年龄组分析、\n' +
-          '病毒型别检测结果等信息。');
-    
     console.log('显示周报详情:', week);
+    
+    // 创建模态框显示详细信息
+    const modal = document.createElement('div');
+    modal.className = 'modal fade';
+    modal.innerHTML = `
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">
+                        <i class="fas fa-chart-bar me-2"></i>
+                        ${week} 流感监测详情
+                    </h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <h6><i class="fas fa-percentage me-2"></i>关键指标</h6>
+                            <ul class="list-group">
+                                <li class="list-group-item d-flex justify-content-between">
+                                    <span>流感阳性率</span>
+                                    <strong class="text-primary">${week.includes('第30周') ? '15.2%' : week.includes('第29周') ? '13.1%' : '12.8%'}</strong>
+                                </li>
+                                <li class="list-group-item d-flex justify-content-between">
+                                    <span>就诊比例</span>
+                                    <strong class="text-success">${week.includes('第30周') ? '3.8%' : week.includes('第29周') ? '4.3%' : '4.1%'}</strong>
+                                </li>
+                                <li class="list-group-item d-flex justify-content-between">
+                                    <span>暴发疫情</span>
+                                    <strong class="text-warning">${week.includes('第30周') ? '12起' : week.includes('第29周') ? '15起' : '18起'}</strong>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="col-md-6">
+                            <h6><i class="fas fa-virus me-2"></i>主要病毒型别</h6>
+                            <div class="progress mb-2">
+                                <div class="progress-bar bg-primary" style="width: 45%">A(H3N2) 45%</div>
+                            </div>
+                            <div class="progress mb-2">
+                                <div class="progress-bar bg-secondary" style="width: 29%">A(H1N1) 29%</div>
+                            </div>
+                            <div class="progress mb-2">
+                                <div class="progress-bar bg-success" style="width: 15%">B型Victoria 15%</div>
+                            </div>
+                            <div class="progress">
+                                <div class="progress-bar bg-warning" style="width: 8%">B型Yamagata 8%</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" onclick="downloadReport('${week}')">
+                        <i class="fas fa-download me-2"></i>下载PDF报告
+                    </button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">关闭</button>
+                </div>
+            </div>
+        </div>
+    `;
+    
+    document.body.appendChild(modal);
+    const bootstrapModal = new bootstrap.Modal(modal);
+    bootstrapModal.show();
+    
+    // 模态框关闭后删除元素
+    modal.addEventListener('hidden.bs.modal', () => {
+        document.body.removeChild(modal);
+    });
 }
 
 // 下载报告
 function downloadReport(week) {
-    // 模拟下载
-    const fileName = week.replace(/年|周/g, '') + '期中国流感监测周报.pdf';
-    alert('开始下载: ' + fileName + '\n\n' +
-          '实际部署时，这里会直接下载对应的PDF文件。');
-    
     console.log('下载报告:', week);
+    
+    // 确定PDF文件名
+    let fileName = '';
+    if (week.includes('第30周')) {
+        fileName = '2025年第30周第867期中国流感监测周报.pdf';
+    } else if (week.includes('第29周')) {
+        fileName = '2025年第29周第866期中国流感监测周报.pdf';
+    } else if (week.includes('第28周')) {
+        fileName = '2025年第28周第865期中国流感监测周报.pdf';
+    } else {
+        fileName = week.replace(/年|周/g, '') + '期中国流感监测周报.pdf';
+    }
+    
+    // 检查文件是否存在（模拟）
+    const fileExists = ['2025年第30周第867期中国流感监测周报.pdf', 
+                       '2025年第29周第866期中国流感监测周报.pdf', 
+                       '2025年第28周第865期中国流感监测周报.pdf'].includes(fileName);
+    
+    if (fileExists) {
+        // 创建下载链接
+        const link = document.createElement('a');
+        link.href = fileName;
+        link.download = fileName;
+        link.style.display = 'none';
+        
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+        
+        // 显示成功提示
+        showToast('下载开始', `正在下载 ${fileName}`, 'success');
+    } else {
+        showToast('文件不存在', `未找到文件 ${fileName}`, 'warning');
+    }
+}
+
+// 显示提示信息
+function showToast(title, message, type = 'info') {
+    const toastContainer = document.getElementById('toastContainer') || createToastContainer();
+    
+    const toast = document.createElement('div');
+    toast.className = `toast align-items-center text-bg-${type} border-0`;
+    toast.setAttribute('role', 'alert');
+    toast.innerHTML = `
+        <div class="d-flex">
+            <div class="toast-body">
+                <strong>${title}</strong><br>
+                ${message}
+            </div>
+            <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast"></button>
+        </div>
+    `;
+    
+    toastContainer.appendChild(toast);
+    const bootstrapToast = new bootstrap.Toast(toast);
+    bootstrapToast.show();
+    
+    // 自动删除
+    toast.addEventListener('hidden.bs.toast', () => {
+        toastContainer.removeChild(toast);
+    });
+}
+
+// 创建Toast容器
+function createToastContainer() {
+    const container = document.createElement('div');
+    container.id = 'toastContainer';
+    container.className = 'toast-container position-fixed bottom-0 end-0 p-3';
+    container.style.zIndex = '1055';
+    document.body.appendChild(container);
+    return container;
 }
 
 // 更新数据函数
