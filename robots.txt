@@ -1,0 +1,37 @@
+User-agent: *
+Allow: /
+
+# 主要页面
+Allow: /index.html
+Allow: /style.css
+Allow: /script.js
+Allow: /data.json
+
+# PDF文件
+Allow: /*.pdf
+
+# 禁止抓取的文件
+Disallow: /.git/
+Disallow: /.github/
+Disallow: /instruction.md
+Disallow: /DEPLOY.md
+Disallow: /log.md
+
+# Sitemap位置
+Sitemap: https://gausshuang.github.io/influenza/sitemap.xml
+
+# 爬虫友好设置
+Crawl-delay: 1
+
+# 特定搜索引擎优化
+User-agent: Googlebot
+Allow: /
+Crawl-delay: 0
+
+User-agent: Bingbot
+Allow: /
+Crawl-delay: 1
+
+User-agent: Baiduspider
+Allow: /
+Crawl-delay: 2

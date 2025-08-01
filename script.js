@@ -98,25 +98,57 @@ function initializeCharts() {
                         x: {
                             grid: {
                                 color: 'rgba(0, 0, 0, 0.05)',
+                                drawBorder: false
                             },
                             ticks: {
                                 font: {
-                                    family: 'Microsoft YaHei'
-                                }
+                                    family: 'Microsoft YaHei',
+                                    size: 12
+                                },
+                                color: '#666',
+                                maxRotation: 0
+                            },
+                            title: {
+                                display: true,
+                                text: '监测周次',
+                                font: {
+                                    family: 'Microsoft YaHei',
+                                    size: 14,
+                                    weight: 'bold'
+                                },
+                                color: '#333',
+                                padding: 10
                             }
                         },
                         y: {
-                            beginAtZero: true,
+                            beginAtZero: false,
+                            min: 0,
+                            max: Math.max(...influenzaData.positiveRates, ...influenzaData.visitRates) + 3,
                             grid: {
                                 color: 'rgba(0, 0, 0, 0.05)',
+                                drawBorder: false
                             },
                             ticks: {
                                 callback: function(value) {
-                                    return value + '%';
+                                    return value.toFixed(1) + '%';
                                 },
                                 font: {
-                                    family: 'Microsoft YaHei'
-                                }
+                                    family: 'Microsoft YaHei',
+                                    size: 12
+                                },
+                                color: '#666',
+                                stepSize: 2
+                            },
+                            title: {
+                                display: true,
+                                text: '百分比 (%)',
+                                font: {
+                                    family: 'Microsoft YaHei',
+                                    size: 14,
+                                    weight: 'bold'
+                                },
+                                color: '#333',
+                                padding: 10
                             }
                         }
                     },
@@ -239,22 +271,54 @@ function initializeCharts() {
                             },
                             ticks: {
                                 font: {
-                                    family: 'Microsoft YaHei'
-                                }
+                                    family: 'Microsoft YaHei',
+                                    size: 11
+                                },
+                                color: '#666',
+                                maxRotation: 45,
+                                minRotation: 0
+                            },
+                            title: {
+                                display: true,
+                                text: '省份/直辖市',
+                                font: {
+                                    family: 'Microsoft YaHei',
+                                    size: 14,
+                                    weight: 'bold'
+                                },
+                                color: '#333',
+                                padding: 10
                             }
                         },
                         y: {
-                            beginAtZero: true,
+                            beginAtZero: false,
+                            min: Math.min(...regionData) - 2,
+                            max: Math.max(...regionData) + 2,
                             grid: {
                                 color: 'rgba(0, 0, 0, 0.05)',
+                                drawBorder: false
                             },
                             ticks: {
                                 callback: function(value) {
-                                    return value + '%';
+                                    return value.toFixed(1) + '%';
                                 },
                                 font: {
-                                    family: 'Microsoft YaHei'
-                                }
+                                    family: 'Microsoft YaHei',
+                                    size: 12
+                                },
+                                color: '#666',
+                                stepSize: 1
+                            },
+                            title: {
+                                display: true,
+                                text: '流感活动水平 (%)',
+                                font: {
+                                    family: 'Microsoft YaHei',
+                                    size: 14,
+                                    weight: 'bold'
+                                },
+                                color: '#333',
+                                padding: 10
                             }
                         }
                     }
@@ -409,6 +473,272 @@ function initializeDataTable() {
             });
         }
     });
+
+    // 初始化综合数据表格排序功能
+    initializeTableSorting();
+    
+    // 初始化数据筛选功能
+    initializeDataFiltering();
+    
+    console.log('数据表格功能初始化完成');
+}
+
+// 初始化表格排序功能
+function initializeTableSorting() {
+    const sortableHeaders = document.querySelectorAll('.sortable');
+    
+    sortableHeaders.forEach(header => {
+        header.style.cursor = 'pointer';
+        header.addEventListener('click', function() {
+            const column = this.getAttribute('data-column');
+            const table = document.getElementById('comprehensiveDataTable');
+            const tbody = table.querySelector('tbody');
+            const rows = Array.from(tbody.querySelectorAll('tr'));
+            
+            // 获取当前排序状态
+            const currentSort = this.getAttribute('data-sort') || 'asc';
+            const newSort = currentSort === 'asc' ? 'desc' : 'asc';
+            
+            // 清除所有排序图标
+            sortableHeaders.forEach(h => {
+                h.querySelector('.fas').className = 'fas fa-sort ms-1';
+                h.removeAttribute('data-sort');
+            });
+            
+            // 设置当前排序图标
+            this.setAttribute('data-sort', newSort);
+            const icon = this.querySelector('.fas');
+            icon.className = newSort === 'asc' ? 'fas fa-sort-up ms-1' : 'fas fa-sort-down ms-1';
+            
+            // 排序数据
+            rows.sort((a, b) => {
+                let aVal, bVal;
+                
+                switch(column) {
+                    case 'positiveRate':
+                        aVal = parseFloat(a.cells[1].textContent.match(/\d+\.\d+/)[0]);
+                        bVal = parseFloat(b.cells[1].textContent.match(/\d+\.\d+/)[0]);
+                        break;
+                    case 'visitRate':
+                        aVal = parseFloat(a.cells[2].textContent);
+                        bVal = parseFloat(b.cells[2].textContent);
+                        break;
+                    case 'outbreaks':
+                        aVal = parseInt(a.cells[3].textContent.match(/\d+/)[0]);
+                        bVal = parseInt(b.cells[3].textContent.match(/\d+/)[0]);
+                        break;
+                    case 'samples':
+                        aVal = parseInt(a.cells[4].textContent.replace(/,/g, ''));
+                        bVal = parseInt(b.cells[4].textContent.replace(/,/g, ''));
+                        break;
+                    default:
+                        return 0;
+                }
+                
+                if (newSort === 'asc') {
+                    return aVal - bVal;
+                } else {
+                    return bVal - aVal;
+                }
+            });
+            
+            // 重新排列行
+            rows.forEach(row => tbody.appendChild(row));
+            
+            // 添加排序动画
+            tbody.classList.add('animate__animated', 'animate__fadeIn');
+            setTimeout(() => {
+                tbody.classList.remove('animate__animated', 'animate__fadeIn');
+            }, 500);
+        });
+    });
+}
+
+// 初始化数据筛选功能
+function initializeDataFiltering() {
+    const dataTypeFilter = document.getElementById('dataTypeFilter');
+    
+    if (dataTypeFilter) {
+        dataTypeFilter.addEventListener('change', function() {
+            const filterType = this.value;
+            const table = document.getElementById('comprehensiveDataTable');
+            const headers = table.querySelectorAll('thead th');
+            const rows = table.querySelectorAll('tbody tr');
+            
+            // 重置所有列显示
+            headers.forEach((header, index) => {
+                header.style.display = '';
+            });
+            
+            rows.forEach(row => {
+                const cells = row.querySelectorAll('td');
+                cells.forEach(cell => {
+                    cell.style.display = '';
+                });
+            });
+            
+            // 根据筛选类型隐藏列
+            if (filterType !== 'all') {
+                const hideColumns = [];
+                
+                switch(filterType) {
+                    case 'positive':
+                        hideColumns = [2, 3, 4]; // 隐藏就诊比例、暴发疫情、检测样本
+                        break;
+                    case 'visit':
+                        hideColumns = [1, 3, 4]; // 隐藏阳性率、暴发疫情、检测样本
+                        break;
+                    case 'outbreak':
+                        hideColumns = [1, 2, 4]; // 隐藏阳性率、就诊比例、检测样本
+                        break;
+                }
+                
+                hideColumns.forEach(colIndex => {
+                    headers[colIndex].style.display = 'none';
+                    rows.forEach(row => {
+                        row.cells[colIndex].style.display = 'none';
+                    });
+                });
+            }
+        });
+    }
+}
+
+// 导出表格数据
+function exportTableData(format) {
+    const table = document.getElementById('comprehensiveDataTable');
+    const data = [];
+    
+    // 获取表头
+    const headers = Array.from(table.querySelectorAll('thead th'))
+        .filter(th => th.style.display !== 'none')
+        .map(th => th.textContent.trim().replace(/\n/g, ' ').replace(/\s+/g, ' '));
+    
+    data.push(headers);
+    
+    // 获取数据行
+    const rows = table.querySelectorAll('tbody tr');
+    rows.forEach(row => {
+        const rowData = Array.from(row.querySelectorAll('td'))
+            .filter((td, index) => {
+                const header = table.querySelectorAll('thead th')[index];
+                return header.style.display !== 'none';
+            })
+            .map(td => {
+                // 清理HTML标签，只保留文本
+                const text = td.textContent.trim().replace(/\n/g, ' ').replace(/\s+/g, ' ');
+                return text;
+            });
+        data.push(rowData);
+    });
+    
+    if (format === 'csv') {
+        downloadCSV(data, '流感监测数据.csv');
+    } else if (format === 'excel') {
+        downloadExcel(data, '流感监测数据.xlsx');
+    }
+}
+
+// 下载CSV文件
+function downloadCSV(data, filename) {
+    const csvContent = data.map(row => 
+        row.map(cell => {
+            // 如果包含逗号或引号，需要用引号包围
+            if (cell.includes(',') || cell.includes('"') || cell.includes('\n')) {
+                return '"' + cell.replace(/"/g, '""') + '"';
+            }
+            return cell;
+        }).join(',')
+    ).join('\n');
+    
+    // 添加UTF-8 BOM以支持中文
+    const bom = '\uFEFF';
+    const blob = new Blob([bom + csvContent], { type: 'text/csv;charset=utf-8;' });
+    const link = document.createElement('a');
+    
+    if (link.download !== undefined) {
+        const url = URL.createObjectURL(blob);
+        link.setAttribute('href', url);
+        link.setAttribute('download', filename);
+        link.style.visibility = 'hidden';
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+    }
+}
+
+// 下载Excel文件 (简化版本，实际需要更复杂的库)
+function downloadExcel(data, filename) {
+    // 这里提供一个简化的HTML表格导出为Excel的方法
+    let htmlTable = '<table border="1">';
+    
+    data.forEach((row, index) => {
+        const tag = index === 0 ? 'th' : 'td';
+        htmlTable += '<tr>';
+        row.forEach(cell => {
+            htmlTable += `<${tag}>${cell}</${tag}>`;
+        });
+        htmlTable += '</tr>';
+    });
+    
+    htmlTable += '</table>';
+    
+    const blob = new Blob(['\ufeff' + htmlTable], {
+        type: 'application/vnd.ms-excel'
+    });
+    
+    const link = document.createElement('a');
+    link.href = URL.createObjectURL(blob);
+    link.download = filename;
+    link.click();
+}
+
+// 打印表格
+function printTable() {
+    const table = document.getElementById('comprehensiveDataTable');
+    const printWindow = window.open('', '_blank');
+    
+    printWindow.document.write(`
+        <!DOCTYPE html>
+        <html>
+        <head>
+            <title>流感监测数据打印</title>
+            <meta charset="UTF-8">
+            <style>
+                body { font-family: 'Microsoft YaHei', sans-serif; margin: 20px; }
+                table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+                th, td { border: 1px solid #ddd; padding: 8px; text-align: left; }
+                th { background-color: #f2f2f2; font-weight: bold; }
+                .title { text-align: center; margin-bottom: 20px; }
+                .print-info { font-size: 12px; color: #666; margin-top: 20px; }
+                @media print {
+                    body { margin: 0; }
+                    .print-info { page-break-inside: avoid; }
+                }
+            </style>
+        </head>
+        <body>
+            <div class="title">
+                <h2>中国流感监测数据平台 - 监测数据报告</h2>
+                <p>数据来源：中国疾病预防控制中心</p>
+            </div>
+            ${table.outerHTML}
+            <div class="print-info">
+                <p>打印时间：${new Date().toLocaleString('zh-CN')}</p>
+                <p>网站地址：https://gausshuang.github.io/influenza</p>
+            </div>
+        </body>
+        </html>
+    `);
+    
+    printWindow.document.close();
+    printWindow.focus();
+    
+    // 等待内容加载完成后打印
+    setTimeout(() => {
+        printWindow.print();
+        printWindow.close();
+    }, 500);
 }
 
 // 显示周报详情
@@ -606,4 +936,6 @@ window.influenzaApp = {
     resizeCharts
 };
 
+console.log('流感监测平台脚本加载完成');
+console.log('流感监测平台脚本加载完成');
 console.log('流感监测平台脚本加载完成');
