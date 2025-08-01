@@ -1,0 +1,148 @@
+{
+  "metadata": {
+    "title": "中国流感监测数据平台",
+    "description": "基于中国疾病预防控制中心流感监测周报的数据可视化平台",
+    "lastUpdated": "2025-01-27",
+    "dataSource": "中国疾病预防控制中心",
+    "version": "1.0.0"
+  },
+  "weeklyReports": [
+    {
+      "week": "2025年第28周",
+      "reportNumber": "第865期",
+      "dateRange": "2025年7月7日-7月13日",
+      "positiveRate": 12.8,
+      "visitRate": 4.1,
+      "outbreaks": 18,
+      "samples": 2691,
+      "virusDistribution": {
+        "A_H3N2": 42.5,
+        "A_H1N1pdm09": 31.2,
+        "B_Victoria": 16.8,
+        "B_Yamagata": 7.3,
+        "Other": 2.2
+      },
+      "regionData": {
+        "北京": 13.5,
+        "上海": 15.2,
+        "广东": 14.1,
+        "浙江": 12.8,
+        "江苏": 14.6,
+        "山东": 11.9,
+        "四川": 11.2,
+        "河南": 12.7,
+        "湖北": 13.8,
+        "湖南": 12.1
+      },
+      "keyFindings": [
+        "全国流感活动水平较前一周略有上升",
+        "A(H3N2)亚型流感病毒占主导地位",
+        "南方省份流感活动水平相对较高",
+        "儿童和老年人群就诊比例有所增加"
+      ]
+    },
+    {
+      "week": "2025年第29周", 
+      "reportNumber": "第866期",
+      "dateRange": "2025年7月14日-7月20日",
+      "positiveRate": 13.1,
+      "visitRate": 4.3,
+      "outbreaks": 15,
+      "samples": 2734,
+      "virusDistribution": {
+        "A_H3N2": 44.1,
+        "A_H1N1pdm09": 29.8,
+        "B_Victoria": 15.7,
+        "B_Yamagata": 8.2,
+        "Other": 2.2
+      },
+      "regionData": {
+        "北京": 14.2,
+        "上海": 16.1,
+        "广东": 14.8,
+        "浙江": 13.5,
+        "江苏": 15.0,
+        "山东": 12.4,
+        "四川": 11.8,
+        "河南": 13.1,
+        "湖北": 14.2,
+        "湖南": 12.6
+      },
+      "keyFindings": [
+        "全国流感活动水平继续保持上升趋势",
+        "A(H3N2)亚型病毒检出比例进一步增加",
+        "多地学校出现聚集性疫情",
+        "疫苗接种覆盖率有待提高"
+      ]
+    },
+    {
+      "week": "2025年第30周",
+      "reportNumber": "第867期", 
+      "dateRange": "2025年7月21日-7月27日",
+      "positiveRate": 15.2,
+      "visitRate": 3.8,
+      "outbreaks": 12,
+      "samples": 2847,
+      "virusDistribution": {
+        "A_H3N2": 45.2,
+        "A_H1N1pdm09": 28.7,
+        "B_Victoria": 15.3,
+        "B_Yamagata": 8.1,
+        "Other": 2.7
+      },
+      "regionData": {
+        "北京": 18.5,
+        "上海": 16.2,
+        "广东": 14.8,
+        "浙江": 13.9,
+        "江苏": 15.1,
+        "山东": 12.3,
+        "四川": 11.7,
+        "河南": 13.2,
+        "湖北": 14.5,
+        "湖南": 12.8
+      },
+      "keyFindings": [
+        "全国流感阳性率达到本轮疫情峰值",
+        "北京地区流感活动水平显著升高",
+        "暴发疫情数量较前一周有所减少",
+        "医疗机构就诊压力相对稳定"
+      ]
+    }
+  ],
+  "statistics": {
+    "totalReports": 3,
+    "dateRange": "2025年7月7日 - 2025年7月27日",
+    "averagePositiveRate": 13.7,
+    "averageVisitRate": 4.1,
+    "totalOutbreaks": 45,
+    "totalSamples": 8272,
+    "trendAnalysis": {
+      "positiveRateTrend": "上升",
+      "visitRateTrend": "稳定",
+      "outbreakTrend": "下降",
+      "dominantVirus": "A(H3N2)"
+    }
+  },
+  "alerts": [
+    {
+      "level": "中等",
+      "region": "北京",
+      "message": "流感活动水平达到中等强度，建议加强防护措施",
+      "date": "2025-07-27"
+    },
+    {
+      "level": "低等",
+      "region": "全国",
+      "message": "整体流感活动水平处于可控范围内",
+      "date": "2025-07-27"
+    }
+  ],
+  "recommendations": [
+    "继续做好个人防护，佩戴口罩，勤洗手",
+    "避免前往人群密集场所，保持社交距离",
+    "及时接种流感疫苗，提高免疫力",
+    "出现流感样症状及时就医，避免延误治疗",
+    "学校和托幼机构加强晨检，做好疫情防控"
+  ]
+}

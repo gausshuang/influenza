@@ -1,0 +1,510 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>中国流感监测数据平台</title>
+    <meta name="description" content="提供最新的中国流感监测数据、趋势分析和历史记录查询">
+    <meta name="keywords" content="流感监测,流感数据,中国流感,疫情监测,健康数据">
+    
+    <!-- 样式库 -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" rel="stylesheet">
+    <link href="style.css" rel="stylesheet">
+    
+    <!-- Google AdSense -->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-0000000000000000"
+            crossorigin="anonymous"></script>
+</head>
+<body>
+    <!-- 导航栏 -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary fixed-top">
+        <div class="container">
+            <a class="navbar-brand" href="#home">
+                <i class="fas fa-virus"></i>
+                流感监测平台
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="#home">
+                            <i class="fas fa-home"></i> 首页
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#dashboard">
+                            <i class="fas fa-chart-line"></i> 数据仪表板
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#history">
+                            <i class="fas fa-history"></i> 历史数据
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#about">
+                            <i class="fas fa-info-circle"></i> 关于
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- 首页区域 -->
+    <section id="home" class="hero-section">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-lg-6">
+                    <div class="hero-content animate__animated animate__fadeInLeft">
+                        <h1 class="display-4 fw-bold mb-4">
+                            <i class="fas fa-shield-virus text-warning"></i>
+                            中国流感监测数据平台
+                        </h1>
+                        <p class="lead mb-4">
+                            实时监测全国流感疫情动态，提供专业的数据分析和趋势预测，
+                            为公众健康防护提供科学依据。
+                        </p>
+                        <div class="d-flex gap-3">
+                            <a href="#dashboard" class="btn btn-primary btn-lg">
+                                <i class="fas fa-chart-bar me-2"></i>查看数据
+                            </a>
+                            <a href="#history" class="btn btn-outline-primary btn-lg">
+                                <i class="fas fa-download me-2"></i>下载报告
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="hero-stats animate__animated animate__fadeInRight">
+                        <div class="row g-3">
+                            <div class="col-md-6">
+                                <div class="stat-card">
+                                    <div class="stat-icon">
+                                        <i class="fas fa-calendar-week"></i>
+                                    </div>
+                                    <div class="stat-info">
+                                        <h3>第30周</h3>
+                                        <p>最新数据</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="stat-card">
+                                    <div class="stat-icon">
+                                        <i class="fas fa-map-marked-alt"></i>
+                                    </div>
+                                    <div class="stat-info">
+                                        <h3>全国覆盖</h3>
+                                        <p>监测网络</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="stat-card">
+                                    <div class="stat-icon">
+                                        <i class="fas fa-hospital"></i>
+                                    </div>
+                                    <div class="stat-info">
+                                        <h3>哨点医院</h3>
+                                        <p>数据来源</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="stat-card">
+                                    <div class="stat-icon">
+                                        <i class="fas fa-clock"></i>
+                                    </div>
+                                    <div class="stat-info">
+                                        <h3>每周更新</h3>
+                                        <p>数据频率</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Google AdSense 横幅广告 -->
+        <div class="container mt-5">
+            <div class="row justify-content-center">
+                <div class="col-12 text-center">
+                    <ins class="adsbygoogle"
+                         style="display:block"
+                         data-ad-client="ca-pub-0000000000000000"
+                         data-ad-slot="0000000000"
+                         data-ad-format="auto"
+                         data-full-width-responsive="true"></ins>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 数据仪表板区域 -->
+    <section id="dashboard" class="py-5 bg-light">
+        <div class="container">
+            <div class="row mb-5">
+                <div class="col-12 text-center">
+                    <h2 class="display-5 fw-bold mb-3">
+                        <i class="fas fa-chart-line text-primary"></i>
+                        数据仪表板
+                    </h2>
+                    <p class="lead text-muted">实时流感监测数据可视化展示</p>
+                </div>
+            </div>
+
+            <!-- 关键指标卡片 -->
+            <div class="row mb-5">
+                <div class="col-lg-3 col-md-6 mb-4">
+                    <div class="metric-card">
+                        <div class="metric-icon bg-primary">
+                            <i class="fas fa-thermometer-half"></i>
+                        </div>
+                        <div class="metric-content">
+                            <h4>样本阳性率</h4>
+                            <div class="metric-value">15.2%</div>
+                            <div class="metric-change positive">
+                                <i class="fas fa-arrow-up"></i> +2.1%
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6 mb-4">
+                    <div class="metric-card">
+                        <div class="metric-icon bg-success">
+                            <i class="fas fa-user-md"></i>
+                        </div>
+                        <div class="metric-content">
+                            <h4>就诊比例</h4>
+                            <div class="metric-value">3.8%</div>
+                            <div class="metric-change negative">
+                                <i class="fas fa-arrow-down"></i> -0.5%
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6 mb-4">
+                    <div class="metric-card">
+                        <div class="metric-icon bg-warning">
+                            <i class="fas fa-exclamation-triangle"></i>
+                        </div>
+                        <div class="metric-content">
+                            <h4>暴发疫情</h4>
+                            <div class="metric-value">12起</div>
+                            <div class="metric-change negative">
+                                <i class="fas fa-arrow-down"></i> -3起
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6 mb-4">
+                    <div class="metric-card">
+                        <div class="metric-icon bg-info">
+                            <i class="fas fa-vial"></i>
+                        </div>
+                        <div class="metric-content">
+                            <h4>检测样本</h4>
+                            <div class="metric-value">2,847</div>
+                            <div class="metric-change positive">
+                                <i class="fas fa-arrow-up"></i> +156
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 图表区域 -->
+            <div class="row mb-5">
+                <div class="col-lg-8">
+                    <div class="chart-container">
+                        <h5 class="mb-3">
+                            <i class="fas fa-chart-area text-primary"></i>
+                            流感阳性率趋势
+                        </h5>
+                        <canvas id="trendChart" width="400" height="200"></canvas>
+                    </div>
+                </div>
+                <div class="col-lg-4">
+                    <!-- 侧边栏广告位 -->
+                    <div class="sidebar-ad mb-4">
+                        <ins class="adsbygoogle"
+                             style="display:block"
+                             data-ad-client="ca-pub-0000000000000000"
+                             data-ad-slot="0000000000"
+                             data-ad-format="rectangle"></ins>
+                    </div>
+                    
+                    <div class="chart-container">
+                        <h5 class="mb-3">
+                            <i class="fas fa-chart-pie text-success"></i>
+                            病毒型别分布
+                        </h5>
+                        <canvas id="virusChart" width="300" height="300"></canvas>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 地区分布 -->
+            <div class="row">
+                <div class="col-12">
+                    <div class="chart-container">
+                        <h5 class="mb-3">
+                            <i class="fas fa-map text-info"></i>
+                            各省份流感活动水平
+                        </h5>
+                        <canvas id="regionChart" width="800" height="400"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 历史数据区域 -->
+    <section id="history" class="py-5">
+        <div class="container">
+            <div class="row mb-5">
+                <div class="col-12 text-center">
+                    <h2 class="display-5 fw-bold mb-3">
+                        <i class="fas fa-history text-primary"></i>
+                        历史数据查询
+                    </h2>
+                    <p class="lead text-muted">查看和下载历史流感监测周报</p>
+                </div>
+            </div>
+
+            <!-- 搜索和筛选 -->
+            <div class="row mb-4">
+                <div class="col-lg-6">
+                    <div class="input-group">
+                        <span class="input-group-text">
+                            <i class="fas fa-search"></i>
+                        </span>
+                        <input type="text" class="form-control" placeholder="搜索周报..." id="searchInput">
+                    </div>
+                </div>
+                <div class="col-lg-3">
+                    <select class="form-select" id="yearFilter">
+                        <option value="">选择年份</option>
+                        <option value="2025">2025年</option>
+                        <option value="2024">2024年</option>
+                    </select>
+                </div>
+                <div class="col-lg-3">
+                    <select class="form-select" id="weekFilter">
+                        <option value="">选择周次</option>
+                        <option value="30">第30周</option>
+                        <option value="29">第29周</option>
+                        <option value="28">第28周</option>
+                    </select>
+                </div>
+            </div>
+
+            <!-- 数据表格 -->
+            <div class="table-responsive">
+                <table class="table table-striped table-hover">
+                    <thead class="table-primary">
+                        <tr>
+                            <th>
+                                <i class="fas fa-calendar"></i> 周次
+                            </th>
+                            <th>
+                                <i class="fas fa-percentage"></i> 阳性率
+                            </th>
+                            <th>
+                                <i class="fas fa-user-injured"></i> 就诊比例
+                            </th>
+                            <th>
+                                <i class="fas fa-exclamation-circle"></i> 暴发疫情
+                            </th>
+                            <th>
+                                <i class="fas fa-download"></i> 操作
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody id="historyTableBody">
+                        <tr>
+                            <td>2025年第30周</td>
+                            <td><span class="badge bg-warning">15.2%</span></td>
+                            <td>3.8%</td>
+                            <td>12起</td>
+                            <td>
+                                <button class="btn btn-sm btn-primary me-2">
+                                    <i class="fas fa-eye"></i> 查看
+                                </button>
+                                <button class="btn btn-sm btn-success">
+                                    <i class="fas fa-download"></i> 下载
+                                </button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>2025年第29周</td>
+                            <td><span class="badge bg-success">13.1%</span></td>
+                            <td>4.3%</td>
+                            <td>15起</td>
+                            <td>
+                                <button class="btn btn-sm btn-primary me-2">
+                                    <i class="fas fa-eye"></i> 查看
+                                </button>
+                                <button class="btn btn-sm btn-success">
+                                    <i class="fas fa-download"></i> 下载
+                                </button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>2025年第28周</td>
+                            <td><span class="badge bg-success">12.8%</span></td>
+                            <td>4.1%</td>
+                            <td>18起</td>
+                            <td>
+                                <button class="btn btn-sm btn-primary me-2">
+                                    <i class="fas fa-eye"></i> 查看
+                                </button>
+                                <button class="btn btn-sm btn-success">
+                                    <i class="fas fa-download"></i> 下载
+                                </button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- 分页 -->
+            <nav aria-label="数据分页">
+                <ul class="pagination justify-content-center">
+                    <li class="page-item disabled">
+                        <a class="page-link" href="#"><i class="fas fa-chevron-left"></i></a>
+                    </li>
+                    <li class="page-item active">
+                        <a class="page-link" href="#">1</a>
+                    </li>
+                    <li class="page-item">
+                        <a class="page-link" href="#">2</a>
+                    </li>
+                    <li class="page-item">
+                        <a class="page-link" href="#">3</a>
+                    </li>
+                    <li class="page-item">
+                        <a class="page-link" href="#"><i class="fas fa-chevron-right"></i></a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </section>
+
+    <!-- 关于区域 -->
+    <section id="about" class="py-5 bg-light">
+        <div class="container">
+            <div class="row mb-5">
+                <div class="col-12 text-center">
+                    <h2 class="display-5 fw-bold mb-3">
+                        <i class="fas fa-info-circle text-primary"></i>
+                        关于平台
+                    </h2>
+                    <p class="lead text-muted">了解我们的数据来源和使命</p>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-lg-6 mb-4">
+                    <div class="about-card">
+                        <div class="about-icon">
+                            <i class="fas fa-bullseye"></i>
+                        </div>
+                        <h4>我们的使命</h4>
+                        <p>为公众提供及时、准确、易懂的流感监测数据，提高全民健康防护意识，促进科学防疫。</p>
+                    </div>
+                </div>
+                <div class="col-lg-6 mb-4">
+                    <div class="about-card">
+                        <div class="about-icon">
+                            <i class="fas fa-database"></i>
+                        </div>
+                        <h4>数据来源</h4>
+                        <p>数据来源于中国疾病预防控制中心发布的官方流感监测周报，确保数据的权威性和准确性。</p>
+                    </div>
+                </div>
+                <div class="col-lg-6 mb-4">
+                    <div class="about-card">
+                        <div class="about-icon">
+                            <i class="fas fa-shield-alt"></i>
+                        </div>
+                        <h4>数据安全</h4>
+                        <p>严格遵守数据安全规范，保护用户隐私，确保数据传输和存储的安全性。</p>
+                    </div>
+                </div>
+                <div class="col-lg-6 mb-4">
+                    <div class="about-card">
+                        <div class="about-icon">
+                            <i class="fas fa-users"></i>
+                        </div>
+                        <h4>服务对象</h4>
+                        <p>面向医疗专业人员、公共卫生工作者、科研人员以及关注健康的普通公众。</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 底部广告位 -->
+            <div class="row mt-5">
+                <div class="col-12 text-center">
+                    <ins class="adsbygoogle"
+                         style="display:block"
+                         data-ad-client="ca-pub-0000000000000000"
+                         data-ad-slot="0000000000"
+                         data-ad-format="auto"
+                         data-full-width-responsive="true"></ins>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 页脚 -->
+    <footer class="bg-dark text-light py-4">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-6">
+                    <h5>
+                        <i class="fas fa-virus me-2"></i>
+                        中国流感监测数据平台
+                    </h5>
+                    <p class="text-muted">让数据服务健康，让科学指导生活</p>
+                </div>
+                <div class="col-lg-6 text-lg-end">
+                    <div class="social-links mb-3">
+                        <a href="#" class="text-light me-3">
+                            <i class="fab fa-github"></i>
+                        </a>
+                        <a href="#" class="text-light me-3">
+                            <i class="fas fa-envelope"></i>
+                        </a>
+                        <a href="#" class="text-light">
+                            <i class="fas fa-rss"></i>
+                        </a>
+                    </div>
+                    <p class="text-muted mb-0">
+                        © 2025 流感监测平台. 保留所有权利.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JavaScript 库 -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"></script>
+    <script src="script.js"></script>
+    
+    <!-- Google AdSense 脚本 -->
+    <script>
+        (adsbygoogle = window.adsbygoogle || []).push({});
+        (adsbygoogle = window.adsbygoogle || []).push({});
+        (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+</body>
+</html>
